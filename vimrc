@@ -53,3 +53,4 @@ nnoremap <leader>w Ctrlw<CR>
 set directory^=$HOME/.vim/tmp//
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
+
