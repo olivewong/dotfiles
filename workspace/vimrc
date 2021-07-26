@@ -1,0 +1,225 @@
+" set nocompatible " be iMproved, required
+filetype plugin indent on
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set splitright
+set nornu
+xnoremap p pgvy
+
+let mapleader = "\<Space>"
+map <leader>pr :Neoformat<CR>
+nnoremap <leader>w :w <CR>
+nnoremap <leader>l :CtrlP <C-R>=expand("%:p:h") . "/" <CR><CR>
+nnoremap <leader>gs :Gstatus <CR>
+nnoremap <leader>gc :Gcommit <CR>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>ga :!git add .<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gp :Gpush origin HEAD<CR>
+nnoremap <leader>gl :0Gclog<CR>
+nnoremap <leader>vs :vsp<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>' <C-W><C-W>
+nnoremap <leader>; <C-W>h
+nnoremap <leader>1 <C-W><C-H>
+
+" Load vim-plug - install if not present
+" vim
+if empty(glob("~/.vim/autoload/plug.vim"))
+  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" Rename current file with :Rename <new filename>
+Plug 'danro/rename.vim'
+" Fuzzy search folder tree
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Valloric/YouCompleteMe'
+" Gives easy keybindings for commenting and uncommenting things.
+" Autoclose quotes, parentheses, brackets, braces, etc.
+Plug 'jiangmiao/auto-pairs'
+" Autoclose xml/html/jsx tags
+Plug 'alvan/vim-closetag'
+" Allows you to prefix movements with ',' to move through
+" CamelCased/snake_cased word movements (e.g. ,w ,b ,e)
+Plug 'vim-scripts/camelcasemotion'
+" Nicely formats JSON
+Plug 'leshill/vim-json'
+" Press ctrl+n to browse directory tree
+Plug 'scrooloose/nerdtree'
+" Shows changes to git repo files in nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Status bar
+Plug 'vim-airline/vim-airline'
+" JS Linter (via JSHint)
+Plug 'Shutnik/jshint2.vim'
+" Color scheme
+Plug 'joshdick/onedark.vim'
+" Improved syntax highlighting
+Plug 'sheerun/vim-polyglot'
+Plug 'sbdchd/neoformat'
+Plug 'dense-analysis/ale'
+let g:neoformat_enabled_javascript = ['prettier']
+Plug 'prettier/vim-prettier', {
+  \ 'do': './yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'json', 'html'] }
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#trailing_comma = 'all'
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\}
+" Initialize Plug plugins
+" Seamlessly navigate vim splits and tmux panes
+" https://robots.thoughtbot.com/seamlessly-navigate-vim-and-tmux-splits
+Plug 'christoomey/vim-tmux-navigator'
+" Show git diff on left side
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" Show class definitions
+Plug 'majutsushi/tagbar'
+Plug 'dkprice/vim-easygrep'
+map <C-t> :TagbarToggle<CR>
+let g:tagbar_show_linenumbers = -1
+" Fuzzy find
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" All of your Plugins must be added before the following line
+call plug#end()              " required
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Plugged package manager commands
+" :PlugList       - lists configured plugins
+" :PlugInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PlugSearch foo - searches for foo; append `!` to refresh local cache
+" :PlugClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+
+
+" NERDTree shit
+" Toggle NERDTree with Ctrl+n
+map <C-n> :NERDTreeToggle<CR>
+" Ignore certain files in NERDTree
+let NERDTreeIgnore = ['\.pyc$','\.class$']
+" Show relative line numbers in NERDTree
+" enable line numbers
+let NERDTreeShowLineNumbers=1
+
+" ctrlp shit
+" Force files searched for to be open in a new buffer,
+" even if they're already open in another split
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|py_modules'
+
+" Enable filetype plugin
+filetype on
+filetype plugin on
+filetype indent on
+
+" Turn on syntax highlighting
+syntax on
+
+" autoindent stuff as you are coding
+set autoindent
+" json highlighting
+au! BufRead,BufNewFile *.json set filetype=json "foldmethod=syntax
+
+"  convert tabs to spaces
+map <LocalLeader>kt :%s/\t/  /g<CR>
+
+" set history to be longer
+set history=1000
+
+" shut the F*** up
+set visualbell
+
+" Change highlight color for pyflakes-vim
+highlight SpellBad term=reverse ctermbg=2
+
+"  Highlight text that goes beyond 90 char column limit
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%91v.\+/
+
+" Automatically show line numbers
+set nu
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+set backspace=indent,eol,start
+
+" Enable folding
+set foldmethod=indent
+set foldlevelstart=99
+
+" Jump to the next or previous line that has the same level or a lower
+" level of indentation than the current line.
+"
+" exclusive (bool): true: Motion is exclusive
+" false: Motion is inclusive
+" fwd (bool): true: Go to next line
+" false: Go to previous line
+" lowerlevel (bool): true: Go to line with lower indentation level
+" false: Go to line with the same indentation level
+" skipblanks (bool): true: Skip blank lines
+" false: Don't skip blank lines
+function! NextIndent(exclusive, fwd, lowerlevel, skipblanks)
+  let line = line('.')
+  let column = col('.')
+  let lastline = line('$')
+  let indent = indent(line)
+  let stepvalue = a:fwd ? 1 : -1
+  while (line > 0 && line <= lastline)
+    let line = line + stepvalue
+    if ( ! a:lowerlevel && indent(line) == indent ||
+          \ a:lowerlevel && indent(line) < indent)
+      if (! a:skipblanks || strlen(getline(line)) > 0)
+        if (a:exclusive)
+          let line = line - stepvalue
+        endif
+        exe line
+        exe "normal " column . "|"
+        return
+      endif
+    endif
+  endwhile
+endfunction
+" To use:
+" 1. Move to the window to mark for the swap via ctrl-w movement
+" 2. Type \mw
+" 3. Move to the window you want to swap
+" 4. Type \pw
+
+" Always display the statusline:
+:set laststatus=2
+
+" Incremental searching - start search as soon as first char entered after /
+set incsearch
+
+" Highlight search matchces
+set hlsearch
+
+" Clear search highlight after hitting enter in normal mode
+nnoremap <CR> :noh<CR><CR>
+
+" Color scheme
+silent!colorscheme onedark
+
+" Don't suggest filenames with these extensions when vs or sp or edit etc.
+set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class
