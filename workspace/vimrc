@@ -8,7 +8,8 @@ set nornu
 xnoremap p pgvy
 
 let mapleader = "\<Space>"
-map <leader>pr :Neoformat<CR>
+"map <leader>pr :Neoformat<CR>
+map <leader>pr :!./yarn prettier --write %<CR>
 nnoremap <leader>w :w <CR>
 nnoremap <leader>l :CtrlP <C-R>=expand("%:p:h") . "/" <CR><CR>
 nnoremap <leader>gs :Gstatus <CR>
@@ -62,19 +63,19 @@ Plug 'joshdick/onedark.vim'
 " Improved syntax highlighting
 Plug 'sheerun/vim-polyglot'
 Plug 'sbdchd/neoformat'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 let g:neoformat_enabled_javascript = ['prettier']
 Plug 'prettier/vim-prettier', {
   \ 'do': './yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'json', 'html'] }
 let g:prettier#config#single_quote = 'true'
 let g:prettier#config#trailing_comma = 'all'
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'eslint'],
-\}
+"let g:ale_fix_on_save = 1
+"let g:ale_fixers = {
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\   'javascript': ['prettier', 'eslint'],
+"\   'typescript': ['prettier', 'eslint'],
+"\}
 " Initialize Plug plugins
 " Seamlessly navigate vim splits and tmux panes
 " https://robots.thoughtbot.com/seamlessly-navigate-vim-and-tmux-splits
@@ -88,7 +89,9 @@ Plug 'dkprice/vim-easygrep'
 map <C-t> :TagbarToggle<CR>
 let g:tagbar_show_linenumbers = -1
 " Fuzzy find
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " All of your Plugins must be added before the following line
 call plug#end()              " required
 
