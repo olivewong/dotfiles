@@ -71,6 +71,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+source /Users/oliviawong/.embite/source.sh
 
 # User configuration
 
@@ -97,12 +98,31 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+# Workspaces
+alias ssd='ssh "CORP\olivia"@172.16.0.12'
+alias ss1234='ssh -L 1234:localhost:1234 "CORP\olivia"@172.16.0.12'
+alias ss9090='ssh -L 9090:localhost:9090 "CORP\olivia"@172.16.0.12'
 alias cd2="cd ../.."
 alias cd3="cd ../../.."
 alias gs="git status"
 alias gc="git commit"
-alias gp="git push origin head"
-alias fr="cd repos/frontier"
+alias gp="git push origin HEAD"
+alias fr="cd ~/repos/frontier"
+alias yarni="yarn install"
+alias yarns="yarn serve data prod"
+alias ba="cd ~/repos/frontier/common/warp/src/components/Modules/Rviz/Backseat/"
+alias esl="yarn lint:eslint --fix"
+alias yrf="yarn run flow"
+alias zshrc="vim ~/.zshrc"
+alias bfg="java -jar /Users/oliviawong/Downloads/bfg-1.13.0.jar"
+alias sse="ssh oliviawong@192.168.0.13"
+alias lfs="git lfs pull && git submodule update --init"
+alias rmcache="rm -rf .parcel-cache yarn-package-cache node_modules"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-features=SameSiteByDefaultCookies"
+
+gnb() {
+  git checkout -b olivia/$(date +'%y-%m-%d')/$1
+}
 
 gre() {
   branch=$(git rev-parse --abbrev-ref HEAD)
