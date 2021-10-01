@@ -1,0 +1,43 @@
+export PATH=~/miniconda3/bin:$PATH
+# Workspaces
+alias ssd='ssh "CORP\olivia"@172.16.0.12'
+alias ss1234='ssh -L 1234:localhost:1234 "CORP\olivia"@172.16.0.12'
+alias ss9090='ssh -L 9090:localhost:9090 "CORP\olivia"@172.16.0.12'
+alias cd2="cd ../.."
+alias cd3="cd ../../.."
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push origin HEAD"
+alias fr="cd ~/repos/frontier"
+alias yarni="yarn install"
+alias yarns="yarn serve data prod"
+alias ba="cd ~/repos/frontier/common/warp/src/components/Modules/Rviz/Backseat/"
+alias esl="yarn lint:eslint --fix"
+alias yrf="yarn run flow"
+alias zshrc="vim ~/.zshrc"
+alias bfg="java -jar /Users/oliviawong/Downloads/bfg-1.13.0.jar"
+alias sse="ssh oliviawong@192.168.0.13"
+alias lfs="git lfs pull && git submodule update --init"
+alias rmcache="rm -rf .parcel-cache yarn-package-cache node_modules"
+
+
+alias bashrc="vim ~/.bashrc"
+
+# Classes/Timeshare-specific
+alias nvim="~/nvim.appimage"
+alias bp="vim ~/.bash_profile"
+alias mc="make clean"
+alias mg="make grade"
+alias l1="cd ~/CSE130/Lab1/pintos/src/threads"
+alias a1="cd ~/CSE130/Assignment1"
+
+gnb() {
+  git checkout -b olivia/$(date +'%y-%m-%d')/$1
+}
+
+gre() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  git remote update && git reset --hard origin/$branch
+} 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
