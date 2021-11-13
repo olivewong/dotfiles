@@ -8,8 +8,9 @@ set nornu
 xnoremap p pgvy
 
 let mapleader = "\<Space>"
-nnoremap map <leader>pr :Neoformat<CR>
+nnoremap <leader>pr :Neoformat<CR>
 nnoremap <leader>vs :vsp<CR>
+nnoremap <leader>sp :sp<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>w :w <CR>
@@ -42,14 +43,24 @@ Plug 'vim-scripts/camelcasemotion'
 " Nicely formats JSON
 Plug 'leshill/vim-json'
 " Press ctrl+n to browse directory tree
+if has('nvim')
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+" LSP
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+else
 Plug 'scrooloose/nerdtree'
+Plug 'ycm-core/YouCompleteMe'
+endif
 " Shows changes to git repo files in nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Status bar
 Plug 'vim-airline/vim-airline'
-" JS Linter (via JSHint)
-"Plug 'Shutnik/jshint2.vim'
-" Color scheme
+" Color schemes
 Plug 'joshdick/onedark.vim'
 " Improved syntax highlighting
 "Plug 'sheerun/vim-polyglot'
@@ -65,18 +76,13 @@ Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 Plug 'dkprice/vim-easygrep'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
 " Fuzzy find
 " Ag required, on timeshare use conda to download
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'ryanoasis/vim-devicons'
+Plug 'mechatroner/minimal_gdb'
 " All of your Plugins must be added before the following line
 call plug#end()              " required
 
@@ -92,14 +98,16 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-"
-
 
 map <C-t> :TagbarToggle<CR>
 let g:tagbar_show_linenumbers = -1
 " NERDTree shit
 " Toggle NERDTree with Ctrl+n
+if has('nvim')
+nnoremap <C-n> :CHADopen<CR>
+else
 map <C-n> :NERDTreeToggle<CR>
+endif
 " Ignore certain files in NERDTree
 let NERDTreeIgnore = ['\.pyc$','\.class$']
 " Show relative line numbers in NERDTree
@@ -111,8 +119,20 @@ let NERDTreeShowLineNumbers=1
 " even if they're already open in another split
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|py_modules'
+" don't make git repo the working directory
+let g:ctrlp_working_path_mode = '' 
+
+"ignore subdirectory stuff using .gitignore
+let g:ctrlp_user_command = [
+    \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+    \ 'find %s -type f'
+    \ ]
+
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
+
+
+
 
 " for asyncomplete.vim log
 " let g:asyncomplete_log_file = expand('~/asyncomplete.log')
@@ -124,6 +144,10 @@ filetype indent on
 
 " Turn on syntax highlighting
 syntax on
+set background=dark
+let g:onedark_termcolors=256
+let g:airline_theme='onedark'
+set encoding=UTF-8
 
 " autoindent stuff as you are coding
 set autoindent
@@ -218,10 +242,10 @@ nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
 " Color scheme
-silent!colorscheme onedark
+colorscheme onedark
 
 " Don't suggest filenames with these extensions when vs or sp or edit etc.
-set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class
+set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class,*.output,
 
 if executable('pyls')
     " pip install python-language-server
