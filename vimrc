@@ -8,8 +8,11 @@ set nornu
 xnoremap p pgvy
 
 let mapleader = "\<Space>"
-"map <leader>pr :Neoformat<CR>
-map <leader>pr :!./yarn prettier --write %<CR>
+nnoremap <leader>pr :Neoformat<CR>
+nnoremap <leader>vs :vsp<CR>
+nnoremap <leader>sp :sp<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>wq :wq<CR>
 nnoremap <leader>w :w <CR>
 nnoremap <leader>l :CtrlP <C-R>=expand("%:p:h") . "/" <CR><CR>
 nnoremap <leader>gs :Gstatus <CR>
@@ -19,9 +22,6 @@ nnoremap <leader>ga :!git add .<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gp :Gpush origin HEAD<CR>
 nnoremap <leader>gl :0Gclog<CR>
-nnoremap <leader>vs :vsp<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>wq :wq<CR>
 nnoremap <leader>' <C-W><C-W>
 nnoremap <leader>; <C-W>h
 nnoremap <leader>1 <C-W><C-H>
@@ -34,48 +34,38 @@ endif
 
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
-
-" Rename current file with :Rename <new filename>
-Plug 'danro/rename.vim'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'gabrielelana/vim-markdown'
 " Fuzzy search folder tree
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe'
-" Gives easy keybindings for commenting and uncommenting things.
-" Autoclose quotes, parentheses, brackets, braces, etc.
-Plug 'jiangmiao/auto-pairs'
-" Autoclose xml/html/jsx tags
-Plug 'alvan/vim-closetag'
 " Allows you to prefix movements with ',' to move through
 " CamelCased/snake_cased word movements (e.g. ,w ,b ,e)
 Plug 'vim-scripts/camelcasemotion'
 " Nicely formats JSON
 Plug 'leshill/vim-json'
+" LSP
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+"https://github.com/ycm-core/YouCompleteMe/issues/914
+"Plug 'ycm-core/YouCompleteMe'
 " Press ctrl+n to browse directory tree
 Plug 'scrooloose/nerdtree'
 " Shows changes to git repo files in nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Status bar
 Plug 'vim-airline/vim-airline'
-" JS Linter (via JSHint)
-Plug 'Shutnik/jshint2.vim'
-" Color scheme
+" Color schemes
 Plug 'joshdick/onedark.vim'
+"Plug 'olivewong/cosme-dark.vim'
+Plug 'arcticicestudio/nord-vim'
 " Improved syntax highlighting
 Plug 'sheerun/vim-polyglot'
 Plug 'sbdchd/neoformat'
-"Plug 'dense-analysis/ale'
-let g:neoformat_enabled_javascript = ['prettier']
-Plug 'prettier/vim-prettier', {
-  \ 'do': './yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'json', 'html'] }
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#trailing_comma = 'all'
-"let g:ale_fix_on_save = 1
-"let g:ale_fixers = {
-"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"\   'javascript': ['prettier', 'eslint'],
-"\   'typescript': ['prettier', 'eslint'],
-"\}
 " Initialize Plug plugins
 " Seamlessly navigate vim splits and tmux panes
 " https://robots.thoughtbot.com/seamlessly-navigate-vim-and-tmux-splits
@@ -86,12 +76,15 @@ Plug 'airblade/vim-gitgutter'
 " Show class definitions
 Plug 'majutsushi/tagbar'
 Plug 'dkprice/vim-easygrep'
-map <C-t> :TagbarToggle<CR>
-let g:tagbar_show_linenumbers = -1
+
 " Fuzzy find
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Ag required, on timeshare use conda to download
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+Plug 'ryanoasis/vim-devicons'
+" CSE 130 C shit
+Plug 'mechatroner/minimal_gdb'
 " All of your Plugins must be added before the following line
 call plug#end()              " required
 
@@ -107,12 +100,16 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-"
 
-
+map <C-t> :TagbarToggle<CR>
+let g:tagbar_show_linenumbers = -1
 " NERDTree shit
 " Toggle NERDTree with Ctrl+n
+if has('nvim')
+nnoremap <C-n> :CHADopen<CR>
+else
 map <C-n> :NERDTreeToggle<CR>
+endif
 " Ignore certain files in NERDTree
 let NERDTreeIgnore = ['\.pyc$','\.class$']
 " Show relative line numbers in NERDTree
@@ -124,6 +121,21 @@ let NERDTreeShowLineNumbers=1
 " even if they're already open in another split
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|py_modules'
+" don't make git repo the working directory
+let g:ctrlp_working_path_mode = '' 
+
+"ignore subdirectory stuff using .gitignore
+let g:ctrlp_user_command = [
+    \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+    \ 'find %s -type f'
+    \ ]
+
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_diagnostics_enabled = 1
+
+" for asyncomplete.vim log
+let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
 " Enable filetype plugin
 filetype on
@@ -131,13 +143,41 @@ filetype plugin on
 filetype indent on
 
 " Turn on syntax highlighting
-syntax on
+syntax enable
+set background=dark
+"let g:onedark_termcolors=256
 
+let g:airline_theme='nord'
+
+" Color scheme
+colorscheme nord
+:hi Comment gui=italic cterm=italic term=italic
+"idk if these are necessary below
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+    autocmd ColorScheme nord highlight Comment cterm=NONE gui=NONE
+    autocmd ColorScheme nord highlight Italic cterm=italic gui=italic
+let g:nord_bold = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline_powerline_fonts = 1
+set encoding=UTF-8
+
+" uh idk if this does anything
+let g:nord_termcolors=256
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+highlight Comment gui=italic
+highlight Comment cterm=italic
 " autoindent stuff as you are coding
 set autoindent
 " json highlighting
 au! BufRead,BufNewFile *.json set filetype=json "foldmethod=syntax
 
+" python
+
+let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
 "  convert tabs to spaces
 map <LocalLeader>kt :%s/\t/  /g<CR>
 
@@ -159,6 +199,10 @@ set nu
 
 " OPTIONAL: This enables automatic indentation as you type.
 filetype indent on
+
+
+
+let g:notes_suffix = '.txt'
 
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
@@ -221,8 +265,52 @@ set hlsearch
 " Clear search highlight after hitting enter in normal mode
 nnoremap <CR> :noh<CR><CR>
 
-" Color scheme
-silent!colorscheme onedark
+" Search for word under cursor
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+
+
 
 " Don't suggest filenames with these extensions when vs or sp or edit etc.
-set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class
+set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class,*.output,*.DS_Store,
+
+if executable('pyls')
+   " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    inoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    inoremap <buffer> <expr><c-d> lsp#scroll(-4)
+    " Asyncomplete
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
