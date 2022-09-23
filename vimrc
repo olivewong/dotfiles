@@ -3,8 +3,12 @@ filetype plugin indent on
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set splitright
+set splitright 
 set nornu
+set synmaxcol=128
+set ttyfast " u got a fast terminal
+set ttyscroll=3
+set lazyredraw " to avoid scrolling problems
 xnoremap p pgvy
 
 let mapleader = "\<Space>"
@@ -45,26 +49,32 @@ Plug 'vim-scripts/camelcasemotion'
 " Nicely formats JSON
 Plug 'leshill/vim-json'
 " LSP
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'prabirshrestha/asyncomplete.vim'
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 
 "https://github.com/ycm-core/YouCompleteMe/issues/914
-"Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe'
 " Press ctrl+n to browse directory tree
 Plug 'scrooloose/nerdtree'
 " Shows changes to git repo files in nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" COLORS
 " Status bar
 Plug 'vim-airline/vim-airline'
-" Color schemes
+Plug 'vim-scripts/CSApprox'
 Plug 'joshdick/onedark.vim'
 "Plug 'olivewong/cosme-dark.vim'
+Plug 'sainnhe/everforest'
 Plug 'arcticicestudio/nord-vim'
 " Improved syntax highlighting
 Plug 'sheerun/vim-polyglot'
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 Plug 'sbdchd/neoformat'
 " Initialize Plug plugins
 " Seamlessly navigate vim splits and tmux panes
@@ -72,7 +82,7 @@ Plug 'sbdchd/neoformat'
 Plug 'christoomey/vim-tmux-navigator'
 " Show git diff on left side
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 " Show class definitions
 Plug 'majutsushi/tagbar'
 Plug 'dkprice/vim-easygrep'
@@ -100,7 +110,9 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+let scheme = "everforest"
 
+let g:neoformat_try_node_exe = 1
 map <C-t> :TagbarToggle<CR>
 let g:tagbar_show_linenumbers = -1
 " NERDTree shit
@@ -141,16 +153,15 @@ let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 filetype on
 filetype plugin on
 filetype indent on
-
+" COLORS
 " Turn on syntax highlighting
 syntax enable
 set background=dark
-"let g:onedark_termcolors=256
 
-let g:airline_theme='nord'
+let g:airline_theme='everforest'
 
 " Color scheme
-colorscheme nord
+colorscheme everforest
 :hi Comment gui=italic cterm=italic term=italic
 "idk if these are necessary below
 let g:nord_italic = 1
