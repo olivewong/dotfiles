@@ -2,7 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/oliviawong/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+export NODE_PATH=$NODE_PATH:`npm root -g`
+export PATH=$PATH:~/.node/bin
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -23,17 +29,16 @@ ZSH_THEME="robbyrussell"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -45,6 +50,9 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -68,10 +76,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
-source /Users/oliviawong/.embite/source.sh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # User configuration
 
@@ -98,34 +106,37 @@ source /Users/oliviawong/.embite/source.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# Workspaces
-alias ssd='ssh "CORP\olivia"@172.16.0.12'
-alias ss1234='ssh -L 1234:localhost:1234 "CORP\olivia"@172.16.0.12'
-alias ss9090='ssh -L 9090:localhost:9090 "CORP\olivia"@172.16.0.12'
+# General aliases
 alias cd2="cd ../.."
 alias cd3="cd ../../.."
+alias zshrc="vim ~/.zshrc"
+
+# Git
 alias gs="git status"
 alias gc="git commit"
 alias gp="git push origin HEAD"
-alias fr="cd ~/repos/frontier"
-alias yarni="yarn install"
-alias yarns="yarn serve data prod"
-alias ba="cd ~/repos/frontier/common/warp/src/components/Modules/Rviz/Backseat/"
 alias esl="yarn lint:eslint --fix"
-alias yrf="yarn run flow"
-alias zshrc="vim ~/.zshrc"
-alias bfg="java -jar /Users/oliviawong/Downloads/bfg-1.13.0.jar"
-alias sse="ssh oliviawong@192.168.0.13"
-alias lfs="git lfs pull && git submodule update --init"
-alias rmcache="rm -rf .parcel-cache yarn-package-cache node_modules"
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-features=SameSiteByDefaultCookies"
 
-gnb() {
-  git checkout -b olivia/$(date +'%y-%m-%d')/$1
-}
+# Web
+alias yi="yarn install"
+alias ys="yarn start"
 
-gre() {
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  git remote update && git reset --hard origin/$branch
-} 
-prompt_context(){}
+# Waabi
+alias ma="cd ~/repos/mappa"
+alias fr="docker-compose up -d &&
+yarn watch"
+alias lint="tools/trunk check && tools/trunk fmt"
+alias ci="tools/trunk check && tools/trunk fmt && yarn type-check && yarn test"
+alias rb="docker-compose build app && docker-compose -f docker-compose.yml up -d"
+alias sslw="ssh -L 8081:127.0.0.1:8081 -v  -N  workstation"
+alias ss="yarn build-streetscape && aws-vault exec waabi-main -- docker-compose -f docker-compose.yml -f docker-compose.streetscape.yml up --build"
+
+
+# Waabi - Sim Results
+alias sr="cd ~/repos/sim_results"
+alias srs="docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build"
+alias srtest="docker-compose -f docker-compose.yml -f docker-compose.integration.yml up --build  --exit-code-from integration_test"
+alias vim='vim "+colorscheme nord"' # I don't know why everything is green but this fixes it
+
+
+export TERM=xterm-256color

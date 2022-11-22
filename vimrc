@@ -1,4 +1,3 @@
-" set nocompatible " be iMproved, required
 filetype plugin indent on
 set tabstop=2
 set shiftwidth=2
@@ -67,7 +66,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/CSApprox'
 Plug 'joshdick/onedark.vim'
 "Plug 'olivewong/cosme-dark.vim'
-Plug 'sainnhe/everforest'
 Plug 'arcticicestudio/nord-vim'
 " Improved syntax highlighting
 Plug 'sheerun/vim-polyglot'
@@ -110,7 +108,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-let scheme = "everforest"
 
 let g:neoformat_try_node_exe = 1
 map <C-t> :TagbarToggle<CR>
@@ -142,10 +139,10 @@ let g:ctrlp_user_command = [
     \ 'find %s -type f'
     \ ]
 
+let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
 let g:lsp_diagnostics_enabled = 1
-
 " for asyncomplete.vim log
 let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
@@ -155,13 +152,11 @@ filetype plugin on
 filetype indent on
 " COLORS
 " Turn on syntax highlighting
-syntax enable
-set background=dark
-
-let g:airline_theme='everforest'
+colorscheme nord
+syntax on
+let g:airline_theme='nord'
 
 " Color scheme
-colorscheme everforest
 :hi Comment gui=italic cterm=italic term=italic
 "idk if these are necessary below
 let g:nord_italic = 1
@@ -176,7 +171,6 @@ let g:airline_powerline_fonts = 1
 set encoding=UTF-8
 
 " uh idk if this does anything
-let g:nord_termcolors=256
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 highlight Comment gui=italic
@@ -185,6 +179,9 @@ highlight Comment cterm=italic
 set autoindent
 " json highlighting
 au! BufRead,BufNewFile *.json set filetype=json "foldmethod=syntax
+let g:lsp_document_highlight_enabled = 1
+
+" highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
 
 " python
 
@@ -198,8 +195,6 @@ set history=1000
 " shut the F*** up
 set visualbell
 
-" Change highlight color for pyflakes-vim
-highlight SpellBad term=reverse ctermbg=2
 
 "  Highlight text that goes beyond 90 char column limit
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
