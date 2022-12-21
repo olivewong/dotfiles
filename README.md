@@ -15,3 +15,4 @@ Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
 Mac settings:
 1. Set Nord in Iterm theme
 2. Set Inconsolata Nerd Font
+
