@@ -17,10 +17,10 @@ vimrc (featuring Nord)
 ### Make fonts and theme pretty
 (not needed for `skinnyvimrc`)
 1. Set Nord in iterm theme (install [here](https://github.com/arcticicestudio/nord-terminal-app) for Terminal)
-2. Download Inconsolata Nerd Font and set as terminal font
+2. Download Inconsolata Nerd Font and set as terminal font for nice ligatures and icons
 
 
-## Cool features in this vimrc
+## Vim commands 
 ### Search
 - [Ctrl+P](https://github.com/ctrlpvim/ctrlp.vim): Search for file name
 - `<space>l`: Search for file name in same directory as this file 
@@ -37,5 +37,6 @@ vimrc (featuring Nord)
 -`<space>pr` Format this file
 
 
-## Other Installation
--  (Set up ZSH and `cp zshrc ~/.zshrc`)
+## Other setup things 
+-  (install zsh and `cp zshrc ~/.zshrc`)
+-  Good Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
