@@ -24,23 +24,20 @@ or this with `skinnyvimrc` (use if you don't want to install a separate theme/fo
 
 
 ### How to use
-fav vim commands
+my fav vim commands
 #### Searching
 - `Ctrl+P`: [Search](https://github.com/ctrlpvim/ctrlp.vim) for file name
 - `<space>l`: Search for file name in same directory as this file 
 - `<space>ag`: Search for word under cursor across all files in directory
 - `:Ag stringIWantToSearchFor`: Search for word across all files in directory
-
-#### LSP (Language Server Protocol) 
-Shows errors/warnings, definitions, etc as you type like VSCode or an IDE would
+#### Misc
+- `[Ctrl+N]` Show files with [NERDTree](https://github.com/preservim/nerdtree)
+- `<space>pr` Format file
+#### LSP (Language Server Protocol) - shows errors/warnings, definitions, etc as you type like VSCode would
 - `:LspInstallServer` Install language server for currently opened file's language (you might need additional installs)
 - See [vim-lsp](https://github.com/prabirshrestha/vim-lsp) for commands 
 
-### Other
-- `[Ctrl+N]` Show files with [NERDTree](https://github.com/preservim/nerdtree)
-- `<space>pr` Format this file
 
-
-## Other setup things 
--  (install zsh and `cp zshrc ~/.zshrc`)
+## Other setup 
+-  install zsh and `cp zshrc ~/.zshrc`
 -  Good Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
