@@ -7,33 +7,33 @@ or this with `skinnyvimrc` (use if you don't want to install a separate theme/fo
 
 
 ## Vim
-### Installing configuration
+### Install
 1. Copy this vimrc `cp skinnyvimrc ~/.vimrc` or `cp vimrc ~/.vimrc`
 2. Open `vim` and install plugs: `:PlugInstall`
 3. Source: `:source ~/.vimrc`
 4. Install `:ag` search: `apt-get install silversearcher-ag` or `brew install the_silver_searcher`
-5. For autocomplete, install [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe#linux-64-bit) 
-  (needs root) the Linux instructions lie, use:
+5. For autocomplete, install [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe#linux-64-bit) (needs root)  
+  the Linux instructions lie, use:
     ```
     cd ~/.vim/plugged/YouCompleteMe
     python3 install.py --all
     ```
-### Make fonts and theme pretty
-(not needed for `skinnyvimrc`)
+### Make fonts and theme pretty (not needed for `skinnyvimrc`)
 1. Set Nord in iterm theme (install [here](https://github.com/arcticicestudio/nord-terminal-app) for Terminal)
 2. Download Inconsolata Nerd Font and set as terminal font for nice ligatures and icons
 
 
-### fav vim commands
+### How to use
+fav vim commands
 #### Searching
 - `Ctrl+P`: [Search](https://github.com/ctrlpvim/ctrlp.vim) for file name
 - `<space>l`: Search for file name in same directory as this file 
-- `<space>ag`: Search for word under cursor across all files in directory (see silver searcher installation above)
+- `<space>ag`: Search for word under cursor across all files in directory
 - `:Ag stringIWantToSearchFor`: Search for word across all files in directory
 
 #### LSP (Language Server Protocol) 
-- Shows errors/warnings, definitions, etc as you type like VSCode or an IDE would
-- `:LspInstallServer` Install language server for currently opened file's language (you might need additional installs but should show errors after this)
+Shows errors/warnings, definitions, etc as you type like VSCode or an IDE would
+- `:LspInstallServer` Install language server for currently opened file's language (you might need additional installs)
 - See [vim-lsp](https://github.com/prabirshrestha/vim-lsp) for commands 
 
 ### Other
