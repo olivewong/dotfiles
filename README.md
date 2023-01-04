@@ -13,6 +13,6 @@ Remember to:
 Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
 
 Mac settings:
-1. Set Nord in Iterm theme
+1. Set Nord in Iterm theme (install [here](https://github.com/arcticicestudio/nord-terminal-app) for Terminal)
 2. Set Inconsolata Nerd Font
 
