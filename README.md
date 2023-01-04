@@ -37,8 +37,8 @@ or this with `skinnyvimrc` (use if you don't want to install a separate theme/fo
 - See [vim-lsp](https://github.com/prabirshrestha/vim-lsp) for commands 
 
 ### Other
--`[Ctrl+N]` Show files with [NERDTree](https://github.com/preservim/nerdtree)
--`<space>pr` Format this file
+- `[Ctrl+N]` Show files with [NERDTree](https://github.com/preservim/nerdtree)
+- `<space>pr` Format this file
 
 
 ## Other setup things 
