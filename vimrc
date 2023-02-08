@@ -22,13 +22,19 @@ nnoremap <leader>gs :Gstatus <CR>
 nnoremap <leader>gc :Gcommit <CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>ga :!git add .<CR>
-nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gd :Gvdiffsplit<CR>
 nnoremap <leader>gp :Gpush origin HEAD<CR>
 nnoremap <leader>gl :0Gclog<CR>
 nnoremap <leader>' <C-W><C-W>
 nnoremap <leader>; <C-W>h
 nnoremap <leader>1 <C-W><C-H>
+nnoremap <leader>d :LspDefinition <C-W><CR>
 
+" Clear search highlight after hitting enter in normal mode
+nnoremap <CR> :noh<CR><CR>
+
+" Search for word under cursor
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 " Load vim-plug - install if not present
 " vim
 if empty(glob("~/.vim/autoload/plug.vim"))
@@ -151,6 +157,9 @@ filetype on
 filetype plugin on
 filetype indent on
 " COLORS
+" Order matters here - TODO: doubel check
+" Make sure to set background before theme 
+set background=dark
 " Turn on syntax highlighting
 colorscheme nord
 syntax on
@@ -267,12 +276,6 @@ set incsearch
 
 " Highlight search matchces
 set hlsearch
-
-" Clear search highlight after hitting enter in normal mode
-nnoremap <CR> :noh<CR><CR>
-
-" Search for word under cursor
-nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
 

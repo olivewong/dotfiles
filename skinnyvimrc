@@ -6,7 +6,7 @@ set shiftwidth=2
 set expandtab
 set splitright 
 set nornu
-set synmaxcol=128
+set synmaxcol=300
 set ttyfast " u got a fast terminal
 set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
@@ -39,6 +39,8 @@ endif
 
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
+" Git things
+Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'gabrielelana/vim-markdown'
@@ -70,7 +72,7 @@ Plug 'sheerun/vim-polyglot'
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install --frozen-lockfile --production',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+  \ 'for': ['javascript', 'typescript', 'tsx', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 Plug 'sbdchd/neoformat'
 Plug 'dkprice/vim-easygrep'
 
@@ -163,6 +165,7 @@ let g:lsp_document_highlight_enabled = 1
 " python
 
 let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
+let g:neoformat_enabled_javascript = ['prettier', 'eslint_d']
 "  convert tabs to spaces
 map <LocalLeader>kt :%s/\t/  /g<CR>
 
@@ -191,10 +194,6 @@ let g:notes_suffix = '.txt'
 let g:tex_flavor='latex'
 
 set backspace=indent,eol,start
-
-" Enable folding
-set foldmethod=indent
-set foldlevelstart=99
 
 " Jump to the next or previous line that has the same level or a lower
 " level of indentation than the current line.
