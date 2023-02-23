@@ -4,14 +4,14 @@ set shiftwidth=2
 set expandtab
 set splitright 
 set nornu
-set synmaxcol=128
+set synmaxcol=256
 set ttyfast " u got a fast terminal
-set ttyscroll=3
+"set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
+set clipboard=unnamed
 xnoremap p pgvy
 
 let mapleader = "\<Space>"
-nnoremap <leader>pr :Neoformat<CR>
 nnoremap <leader>vs :vsp<CR>
 nnoremap <leader>sp :sp<CR>
 nnoremap <leader>w :w<CR>
@@ -28,7 +28,11 @@ nnoremap <leader>gl :0Gclog<CR>
 nnoremap <leader>' <C-W><C-W>
 nnoremap <leader>; <C-W>h
 nnoremap <leader>1 <C-W><C-H>
-nnoremap <leader>d :LspDefinition <C-W><CR>
+" Lsp/format stuff
+nnoremap <leader>pr :Neoformat<CR>
+nnoremap <leader>d :LspDefinition <CR>
+nnoremap <leader>e :LspNextDiagnostic <CR>
+nnoremap <leader>E :LspPreviousDiagnostic <CR>
 
 " Clear search highlight after hitting enter in normal mode
 nnoremap <CR> :noh<CR><CR>
@@ -190,8 +194,10 @@ set autoindent
 au! BufRead,BufNewFile *.json set filetype=json "foldmethod=syntax
 let g:lsp_document_highlight_enabled = 1
 
+
 " highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
 
+set bg=dark
 " python
 
 let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
@@ -281,6 +287,17 @@ set hlsearch
 
 " Don't suggest filenames with these extensions when vs or sp or edit etc.
 set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class,*.output,*.DS_Store,
+" Go
+augroup LspGo
+  au!
+  autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'go-lang',
+      \ 'cmd': {server_info->['gopls']},
+      \ 'whitelist': ['go'],
+      \ })
+  autocmd FileType go setlocal omnifunc=lsp#complete
+  autocmd FileType go nmap <buffer> gd <plug>(lsp-definition)
+augroup END
 
 if executable('pyls')
    " pip install python-language-server
@@ -295,7 +312,7 @@ function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
+    "nmap <buffer> gd <plug>(lsp-definition)
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
     nmap <buffer> gr <plug>(lsp-references)
