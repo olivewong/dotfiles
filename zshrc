@@ -14,7 +14,8 @@ export PATH=$PATH:~/.node/bin
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
+prompt_context(){}
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -110,6 +111,8 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 alias cd2="cd ../.."
 alias cd3="cd ../../.."
 alias zshrc="vim ~/.zshrc"
+alias vim="vim +'colorscheme nord'"
+alias dockerstop="docker stop $(docker ps -a -q)"
 
 # Git
 alias gs="git status"
@@ -120,6 +123,7 @@ alias esl="yarn lint:eslint --fix"
 # Web
 alias yi="yarn install"
 alias ys="yarn start"
+alias esfix="npx eslint --fix ."
 
 # Waabi
 alias ma="cd ~/repos/mappa"
@@ -132,11 +136,18 @@ alias sslw="ssh -L 8081:127.0.0.1:8081 -v  -N  workstation"
 alias ss="yarn build-streetscape && aws-vault exec waabi-main -- docker-compose -f docker-compose.yml -f docker-compose.streetscape.yml up --build"
 
 
+
+
 # Waabi - Sim Results
-alias sr="cd ~/repos/sim_results"
-alias srs="docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build"
+alias sr="cd ~/repos/sim_results "
+alias srs="cd ~/repos/sim_results && docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build"
 alias srtest="docker-compose -f docker-compose.yml -f docker-compose.integration.yml up --build  --exit-code-from integration_test"
-alias vim='vim "+colorscheme nord"' # I don't know why everything is green but this fixes it
+#alias vim='vim "+colorscheme nord"' # I don't know why everything is green but this fixes it
+
+
+# Waabi - foxglove
+alias fo="cd ~/repos/foxglove-extensions"
+alias yli="yarn local-install"
 
 
 export TERM=xterm-256color
