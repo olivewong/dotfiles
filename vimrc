@@ -11,6 +11,7 @@ set lazyredraw " to avoid scrolling problems
 set clipboard=unnamed
 xnoremap p pgvy
 
+" BINDINGS
 let mapleader = "\<Space>"
 nnoremap <leader>vs :vsp<CR>
 nnoremap <leader>sp :sp<CR>
@@ -31,18 +32,38 @@ nnoremap <leader>1 <C-W><C-H>
 " Lsp/format stuff
 nnoremap <leader>pr :Neoformat<CR>
 nnoremap <leader>d :LspDefinition <CR>
+nnoremap <leader>r :LspReferences <CR>
 nnoremap <leader>e :LspNextDiagnostic <CR>
 nnoremap <leader>E :LspPreviousDiagnostic <CR>
+nnoremap <leader>pp :LspDocumentFormat <CR>
+nnoremap <leader>fm :!tools/trunk fmt<CR>
 
+function! ToggleSplitsAndNu()
+    if !exists("w:is_sole_window")
+        let w:is_sole_window = 0
+    endif
+    if w:is_sole_window
+        " Restore other splits and line numbers
+        execute "wincmd o"
+        execute "windo set nu"
+        let w:is_sole_window = 0
+    else
+        " Hide other splits and line numbers
+        execute "wincmd O"
+        execute "windo set nonu"
+        let w:is_sole_window = 1
+    endif
+endfunction
+nnoremap <leader>c :call ToggleSplitsAndNu()<CR>
 " Clear search highlight after hitting enter in normal mode
-nnoremap <CR> :noh<CR><CR>
+"nnoremap <CR> :noh<CR><CR>
 
 " Search for word under cursor
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 " Load vim-plug - install if not present
 " vim
 if empty(glob("~/.vim/autoload/plug.vim"))
-  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 " Specify a directory for plugins
@@ -58,14 +79,14 @@ Plug 'vim-scripts/camelcasemotion'
 " Nicely formats JSON
 Plug 'leshill/vim-json'
 " LSP
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 
 "https://github.com/ycm-core/YouCompleteMe/issues/914
-Plug 'ycm-core/YouCompleteMe'
+"Plug 'ycm-core/YouCompleteMe'
 " Press ctrl+n to browse directory tree
 Plug 'scrooloose/nerdtree'
 " Shows changes to git repo files in nerdtree
@@ -81,8 +102,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'sheerun/vim-polyglot'
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install --frozen-lockfile --production',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+\ 'do': 'yarn install --frozen-lockfile --production',
+\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 Plug 'sbdchd/neoformat'
 " Initialize Plug plugins
 " Seamlessly navigate vim splits and tmux panes
@@ -145,16 +166,10 @@ let g:ctrlp_working_path_mode = ''
 
 "ignore subdirectory stuff using .gitignore
 let g:ctrlp_user_command = [
-    \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-    \ 'find %s -type f'
-    \ ]
+  \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+  \ 'find %s -type f'
+  \ ]
 
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/vim-lsp.log')
-let g:lsp_diagnostics_enabled = 1
-" for asyncomplete.vim log
-let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
 " Enable filetype plugin
 filetype on
@@ -163,19 +178,20 @@ filetype indent on
 " COLORS
 " Order matters here - TODO: doubel check
 " Make sure to set background before theme 
-set background=dark
 " Turn on syntax highlighting
-colorscheme nord
 syntax on
-let g:airline_theme='nord'
+set background=dark
+"let g:airline_theme='nord'
+let g:airline_theme='onedark'
+colorscheme onedark
 
 " Color scheme
 :hi Comment gui=italic cterm=italic term=italic
 "idk if these are necessary below
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
-    autocmd ColorScheme nord highlight Comment cterm=NONE gui=NONE
-    autocmd ColorScheme nord highlight Italic cterm=italic gui=italic
+  "autocmd ColorScheme nord highlight Comment cterm=NONE gui=NONE
+  "autocmd ColorScheme nord highlight Italic cterm=italic gui=italic
 let g:nord_bold = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -186,20 +202,16 @@ set encoding=UTF-8
 " uh idk if this does anything
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
-highlight Comment gui=italic
+"highlight Comment gui=italic
 highlight Comment cterm=italic
 " autoindent stuff as you are coding
 set autoindent
 " json highlighting
 au! BufRead,BufNewFile *.json set filetype=json "foldmethod=syntax
-let g:lsp_document_highlight_enabled = 1
+" Don't suggest filenames with these extensions when vs or sp or edit etc.
+set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class,*.output,*.DS_Store,
 
-
-" highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
-
-set bg=dark
 " python
-
 let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
 "  convert tabs to spaces
 map <LocalLeader>kt :%s/\t/  /g<CR>
@@ -248,25 +260,25 @@ set foldlevelstart=99
 " skipblanks (bool): true: Skip blank lines
 " false: Don't skip blank lines
 function! NextIndent(exclusive, fwd, lowerlevel, skipblanks)
-  let line = line('.')
-  let column = col('.')
-  let lastline = line('$')
-  let indent = indent(line)
-  let stepvalue = a:fwd ? 1 : -1
-  while (line > 0 && line <= lastline)
-    let line = line + stepvalue
-    if ( ! a:lowerlevel && indent(line) == indent ||
-          \ a:lowerlevel && indent(line) < indent)
-      if (! a:skipblanks || strlen(getline(line)) > 0)
-        if (a:exclusive)
-          let line = line - stepvalue
-        endif
-        exe line
-        exe "normal " column . "|"
-        return
+let line = line('.')
+let column = col('.')
+let lastline = line('$')
+let indent = indent(line)
+let stepvalue = a:fwd ? 1 : -1
+while (line > 0 && line <= lastline)
+  let line = line + stepvalue
+  if ( ! a:lowerlevel && indent(line) == indent ||
+        \ a:lowerlevel && indent(line) < indent)
+    if (! a:skipblanks || strlen(getline(line)) > 0)
+      if (a:exclusive)
+        let line = line - stepvalue
       endif
+      exe line
+      exe "normal " column . "|"
+      return
     endif
-  endwhile
+  endif
+endwhile
 endfunction
 " To use:
 " 1. Move to the window to mark for the swap via ctrl-w movement
@@ -285,34 +297,40 @@ set hlsearch
 
 
 
-" Don't suggest filenames with these extensions when vs or sp or edit etc.
-set wildignore+=*.pdf,*.d,*.o,*.pyc,*.jpg,*.jpeg,*.png,*.class,*.output,*.DS_Store,
+" LSP THINGS
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_document_highlight_enabled = 0
+let g:lsp_inlay_hints_enabled = 1
+
 " Go
 augroup LspGo
-  au!
-  autocmd User lsp_setup call lsp#register_server({
-      \ 'name': 'go-lang',
-      \ 'cmd': {server_info->['gopls']},
-      \ 'whitelist': ['go'],
-      \ })
-  autocmd FileType go setlocal omnifunc=lsp#complete
-  autocmd FileType go nmap <buffer> gd <plug>(lsp-definition)
+au!
+autocmd User lsp_setup call lsp#register_server({
+    \ 'name': 'go-lang',
+    \ 'cmd': {server_info->['gopls']},
+    \ 'whitelist': ['go'],
+    \ })
+autocmd FileType go setlocal omnifunc=lsp#complete
+autocmd FileType go nmap <buffer> gd <plug>(lsp-definition)
 augroup END
 
 if executable('pyls')
-   " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'allowlist': ['python'],
-        \ })
+ " pip install python-language-server
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'pyls',
+      \ 'cmd': {server_info->['pyls']},
+      \ 'allowlist': ['python'],
+      \ })
 endif
 
 function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    "nmap <buffer> gd <plug>(lsp-definition)
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  "nmap <buffer> gd <plug>(lsp-definition)
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
     nmap <buffer> gr <plug>(lsp-references)
