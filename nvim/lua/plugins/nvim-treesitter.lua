@@ -12,7 +12,21 @@ return {
         "gowork",
         "gosum",
         "dockerfile",
+        "proto",
       })
     end,
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    -- change some options
+    opts = {
+      defaults = {
+        file_ignore_patterns = { ".git/*", ".vscode/*", "*.foxe" },
+      },
+    },
+  },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   },
 }
