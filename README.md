@@ -48,23 +48,26 @@ my fav vim commands
 - See [vim-lsp](https://github.com/prabirshrestha/vim-lsp) for commands
 
 ## Nvim
+
 Install nvim (for universal linux):
+
 ```
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 ./nvim.appimage
 ```
+
+set alias in `~/.bashrc`: `alias nvim="~/nvim.appimage"`
 Copy the `nvim` folder to `~/.config/nvim`. This contains lazy.nvim configs. see https://www.lazyvim.org/ for more info
 `cp -r nvim ~/.config/nvim`
-Install ripgrep for search (something was weird with ag): ` sudo apt-get install ripgrep` or `brew install ripgrep` 
+Install ripgrep for search (something was weird with ag): ` sudo apt-get install ripgrep` or `brew install ripgrep`
 The apt install neovim is really old so we have to build from source:
 Install lua: ` sudo apt install lua5.3`
 
-
+## Other setup
 
 ## Other setup
 
-## Other setup 
--  install ohmyzsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"` and `cp zshrc ~/.zshrc`
--  Good Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
--  for rust, remember to install rustfmt apt install rustfmt or something otherwise neoformat doesn't work
+- install ohmyzsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"` and `cp zshrc ~/.zshrc`
+- Good Ubuntu theme: budgie arc-dark with mcmojave-circle-pink
+- for rust, remember to install rustfmt apt install rustfmt or something otherwise neoformat doesn't work
