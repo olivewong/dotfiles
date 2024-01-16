@@ -34,11 +34,25 @@ vim.keymap.set("n", "<C-P>", function()
   builtin.find_files({ hidden = true })
 end, {})
 
+-- C-l find file next to open file
+vim.keymap.set("n", "<leader>l", function()
+  local current_file_dir = vim.fn.expand("%:p:h")
+  builtin.find_files({ cwd = current_file_dir })
+end, {})
+
 -- Word under cursor
 vim.keymap.set("n", "<leader>ag", builtin.grep_string, {})
 
 -- Ctrl+N: show file tree
-vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree reveal<CR>", { noremap = true, silent = true })
+
+-- TODO: check if works / file creation
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-Y>",
+  ":Telescope file_browser create_from_prompt path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
 
 -- we hate go error handling
 vim.api.nvim_set_keymap(
