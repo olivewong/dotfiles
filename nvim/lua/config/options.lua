@@ -3,3 +3,4 @@
 -- Add any additional options here
 -- items
 vim.g.mapleader = " "
+vim.o.swapfile = false
