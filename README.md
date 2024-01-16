@@ -26,7 +26,6 @@ or this with `skinnyvimrc` (use if you don't want to install a separate theme/fo
 1. Set Nord in iterm theme (install [here](https://github.com/arcticicestudio/nord-terminal-app) for Terminal)
 2. Download Inconsolata Nerd Font and set as terminal font for nice ligatures and icons
 
->>>>>>> 12bad8e30a810b5c97a2296211a96224a9362bf6
 ### How to use
 
 my fav vim commands
@@ -49,8 +48,19 @@ my fav vim commands
 - See [vim-lsp](https://github.com/prabirshrestha/vim-lsp) for commands
 
 ## Nvim
-
+Install nvim (for universal linux):
+```
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+./nvim.appimage
+```
 Copy the `nvim` folder to `~/.config/nvim`. This contains lazy.nvim configs. see https://www.lazyvim.org/ for more info
+`cp -r nvim ~/.config/nvim`
+Install ripgrep for search (something was weird with ag): ` sudo apt-get install ripgrep` or `brew install ripgrep` 
+The apt install neovim is really old so we have to build from source:
+Install lua: ` sudo apt install lua5.3`
+
+
 
 ## Other setup
 
