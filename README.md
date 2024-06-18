@@ -1,6 +1,9 @@
 # Dotfiles / ✨Vim✨ setup
 
-`vimrc` to make vim look like this:
+`vimrc` to make nvim look like this:
+<img width="1265" alt="Screenshot 2024-06-18 at 10 40 13 AM" src="https://github.com/olivewong/dotfiles/assets/11857485/2751d42a-f720-4f5b-a337-1414e7f948fd">
+
+or this with vanilla vim:
 ![Screen Shot 2022-12-21 at 3 53 26 PM](https://user-images.githubusercontent.com/11857485/209025580-bf345dda-8dc7-4c06-b207-025d5d49f2fe.png)
 
 or this with `skinnyvimrc` (use if you don't want to install a separate theme/font)
