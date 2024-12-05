@@ -1,0 +1,12 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.editor.outline",
+    "lazyvim.plugins.extras.lang.toml",
+    "lazyvim.plugins.extras.lsp.none-ls",
+    "lazyvim.plugins.extras.ui.edgy"
+  ],
+  "news": {
+    "NEWS.md": "7429"
+  },
+  "version": 7
+}
