@@ -6,4 +6,5 @@ vim.g.mapleader = " "
 vim.o.swapfile = false
 -- make clipboard able to paste everywhere
 vim.opt.clipboard = "unnamed"
-vim.lsp.set_log_level("debug")
+--vim.lsp.set_log_level("debug")
+

@@ -28,7 +28,9 @@ return {
   },
   -- colorscheme pastely
   -- todo mayube violet
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = { flavour = "macchiato" } },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000,     init = function()
+    vim.cmd.colorscheme("catppuccin-macchiato")
+  end,opts = { flavour = "macchiato" } },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
