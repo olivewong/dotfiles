@@ -24,6 +24,8 @@ vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true })
 -- Save and quit current file
 vim.api.nvim_set_keymap("n", "<leader>wq", ":wq<CR>", { noremap = true })
 
+vim.api.nvim_set_keymap("n", "<leader>pr", ":!trunk fmt<CR>", { noremap = true })
+
 -- Ctrl+Shift+R: Run yarn local-install in the shell from the currently open directory
 vim.api.nvim_set_keymap("n", "<C-S-r>", ":!yarn local-install<CR>", { noremap = true, silent = false })
 
@@ -39,10 +41,9 @@ vim.keymap.set("n", "<leader>l", function()
   local current_file_dir = vim.fn.expand("%:p:h")
   builtin.find_files({ cwd = current_file_dir })
 end, {})
-
--- Word under cursor
+--
+-- -- Word under cursor
 vim.keymap.set("n", "<leader>ag", builtin.grep_string, {})
 
 -- Ctrl+N: show file tree
 vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree reveal<CR>", { noremap = true, silent = true })
-
