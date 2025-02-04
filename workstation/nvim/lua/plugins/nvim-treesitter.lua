@@ -28,9 +28,15 @@ return {
   },
   -- colorscheme pastely
   -- todo mayube violet
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000,     init = function()
-    vim.cmd.colorscheme("catppuccin-macchiato")
-  end,opts = { flavour = "macchiato" } },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    init = function()
+      vim.cmd.colorscheme("catppuccin-macchiato")
+    end,
+    opts = { flavour = "macchiato" },
+  },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
@@ -210,26 +216,34 @@ return {
           default_settings = {
             -- rust-analyzer language server configuration
             ["rust-analyzer"] = {
-              cargo = {
-                allFeatures = true,
-                loadOutDirsFromCheck = true,
-                buildScripts = {
-                  enable = true,
-                },
+              -- cargo = {
+              --   allFeatures = true,
+              --   loadOutDirsFromCheck = true,
+              --   buildScripts = {
+              --     enable = true,
+              --   },
+              -- },
+              procMacro = {
+                enable = true,
               },
               server = {
                 extraEnv = { RUSTC = "~/av/tools/rustc" },
               },
-              -- Add clippy lints for Rust.
-              check = {
-                overrideCommand = {
-                  "~/av/tools/rust_check.sh",
-                },
-                command = {
-                  "~/av/tools/rust_check.sh",
-                },
+              diagnostics = {
+                disabled = { "unresolved-proc-macro-call" },
               },
+              -- Add clippy lints for Rust.
+              -- check = {
+              --   overrideCommand = {
+              --     "~/av/tools/rust_check.sh",
+              --   },
+              --   command = {
+              --     "~/av/tools/rust_check.sh",
+              --   },
+              -- },
               checkOnSave = {
+                allFeatures = true,
+                command = "~/av/tools/rust_check.sh",
                 overrideCommand = {
                   "~/av/tools/rust_check.sh",
                 },
