@@ -7,3 +7,5 @@ vim.o.swapfile = false
 -- make clipboard able to paste everywhere
 vim.opt.clipboard = "unnamed"
 vim.lsp.set_log_level("info")
+vim.opt.termguicolors = true
+vim.opt.relativenumber = false

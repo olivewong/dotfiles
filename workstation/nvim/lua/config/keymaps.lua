@@ -28,22 +28,36 @@ vim.api.nvim_set_keymap("n", "<leader>pr", ":!trunk fmt<CR>", { noremap = true }
 
 -- Ctrl+Shift+R: Run yarn local-install in the shell from the currently open directory
 vim.api.nvim_set_keymap("n", "<C-S-r>", ":!yarn local-install<CR>", { noremap = true, silent = false })
+-- Diagnostic keymaps
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostic [Q]uickfix list" })
 
 -- SEARCH / FINDING THINGS
--- C-P classic find file
 local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep", noremap = true })
+-- vim.api.nvim_set_keymap("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep", noremap = true })
+
 vim.keymap.set("n", "<C-P>", function()
-  builtin.find_files({ hidden = true })
+  builtin.find_files({ hidden = true, cwd = vim.fn.getcwd() })
 end, {})
+-- C-P classic find file
+-- local builtin = require("telescope.builtin")
+-- vim.keymap.set("n", "<C-P>", function()
+--   builtin.find_files({ hidden = true })
+-- end, {})
 
 -- C-l find file next to open file
 vim.keymap.set("n", "<leader>l", function()
   local current_file_dir = vim.fn.expand("%:p:h")
   builtin.find_files({ cwd = current_file_dir })
-end, {})
+end, { noremap = true })
 --
+-- not actually ag it uses rg i think lmao
 -- -- Word under cursor
+-- vim.keymap.set("n", "<leader>ag", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>ag", builtin.grep_string, {})
+vim.api.nvim_create_user_command("Ag", function(opts)
+  require("telescope.builtin").grep_string({ search = opts.args })
+end, { nargs = 1 })
 
 -- Ctrl+N: show file tree
 vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree reveal<CR>", { noremap = true, silent = true })
