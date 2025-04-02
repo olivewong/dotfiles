@@ -1,20 +1,23 @@
 return {
-  { -- extend auto completion
-    "hrsh7th/nvim-cmp",
-    lazy = false,
-    dependencies = {
-      {
-        "Saecki/crates.nvim",
-        event = { "BufRead Cargo.toml" },
-        config = true,
-      },
-      -- TODO:
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lua" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-cmdline" },
-    },
-  },
+  -- one of these messed up autocomplete
+  -- { -- extend auto completion
+  --   "hrsh7th/nvim-cmp",
+  --   lazy = false,
+  --   dependencies = {
+  --     {
+  --       "Saecki/crates.nvim",
+  --       event = { "BufRead Cargo.toml" },
+  --       config = true,
+  --     },
+  --     -- TODO:
+  --     { "hrsh7th/cmp-nvim-lsp" },
+  --     { "hrsh7th/cmp-nvim-lua" },
+  --     { "hrsh7th/cmp-buffer" },
+  --     { "hrsh7th/cmp-cmdline" },
+  --   },
+  -- },
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
+  -- mappings are c o = choose theirs ]x : go to next etc
   {
     -- make the root the repo root/sensible directory revardless of which file open
     "airblade/vim-rooter",
@@ -27,7 +30,8 @@ return {
   {
     "tpope/vim-fugitive",
   },
-  { "folke/neoconf.nvim" },
+  -- with curr config results in runing analyzer twice
+  -- { "folke/neoconf.nvim" },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
@@ -50,6 +54,7 @@ return {
     end,
   },
   -- color scheme
+  --  this one had weird indentetnation coloring
   -- {
   --   "frenzyexists/aquarium-vim",
   --   lazy = false, -- Load immediately
@@ -70,6 +75,18 @@ return {
       picker = { enabled = false },
     },
   },
+  { "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
+
+  {
+    "gbprod/nord.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("nord").setup({})
+      vim.cmd.colorscheme("nord")
+    end,
+  },
+
   -- colorscheme pastely
   -- todo mayube violet
   -- {
@@ -147,22 +164,14 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
-      local icons = LazyVim.config.icons
       return {
         sections = {
           lualine_c = {
-            LazyVim.lualine.root_dir(),
             {
-              "diagnostics",
-              symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warn,
-                info = icons.diagnostics.Info,
-                hint = icons.diagnostics.Hint,
-              },
+              "filename",
+              file_status = true, -- displays file status (readonly status, modified status)
+              path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
             },
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { "filename", file_status = true, path = 1 },
           },
         },
       }
@@ -281,13 +290,14 @@ return {
               },
               -- see t he zed config for lens, might be things
               diagnostics = {
-                experimental = {
-                  enable = true,
-                },
+                -- experimental = {
+                --   enable = true,
+                -- },
+                disabled = { "unresolved-macro-call" },
               },
-              -- runnables = {
-              --   command = "tools/cargo",
-              -- },
+              runnables = {
+                command = "tools/cargo",
+              },
               -- rustc = {
               --   source = "Cargo.toml",
               -- },
@@ -303,11 +313,8 @@ return {
                 enable = true,
               },
               procMacro = {
-                enable = true,
+                enable = false,
               },
-              -- diagnostics = {
-              --     disabled = { 'unresolved-macro-call' },
-              -- },
             },
           },
         },
@@ -317,45 +324,3 @@ return {
     end,
   },
 }
-
--- TODO: debugging see below rust
--- vim.g.rustaceanvim = {
---   server = {
---     extraEnv = { RUSTC = "~/av/tools/rustc" },
---     on_attach = function(_, bufnr)
---       local function map(mode, lhs, rhs, desc)
---         vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, desc = desc })
---       end
---
---       -- Keybindings for Rust LSP
---       map("n", "<leader>cR", function()
---         vim.cmd.RustLsp("codeAction")
---       end, "Code Action")
---       map("n", "<leader>dr", function()
---         vim.cmd.RustLsp("debuggables")
---       end, "Rust Debuggables")
---       map("n", "K", function()
---         vim.cmd.RustLsp({ "hover", "actions" })
---       end, "Hover Actions")
---     end,
---     default_settings = {
---       ["rust-analyzer"] = {
---         -- rustfmt = { overrideCommand = { "trunk", "fmt" } },
---         check = { overrideCommand = { "~/av/tools/rust_check.sh" } },
---         diagnostics = { disabled = { "unresolved-proc-macro-call" } },
---         procMacro = { enable = true },
---       },
---     },
---   },
---   dap = (function()
---     local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/"
---     local codelldb_path = extension_path .. "adapter/codelldb"
---     local liblldb_path = extension_path .. "lldb/lib/liblldb"
---     local this_os = vim.uv.os_uname().sysname
---
---     liblldb_path = liblldb_path .. (this_os == "Linux" and ".so" or ".dylib")
---
---     local cfg = require("rustaceanvim.config")
---     return { adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path) }
---   end)(),
--- }
