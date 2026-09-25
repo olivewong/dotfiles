@@ -8,7 +8,7 @@ from pathlib import Path
 HOME = Path.home()
 STATE = HOME / ".claude" / "statusline-state"
 PROJECTS = HOME / ".claude" / "projects"
-BUDGET = float(os.environ.get("CLAUDE_BUDGET_USD") or 400)
+BUDGET = float(os.environ.get("CLAUDE_BUDGET_USD") or 2000)
 
 C = dict(
     base="#1e1e2e",
@@ -116,11 +116,6 @@ FOLIAGE_L = [
     "\U000f0405",  # pine tree
     "\U000f024a",  # flower
     "\U000f0db5",  # cactus
-]
-FOLIAGE_R = [
-    "\U000f09f1",  # tulip
-    "\U000f0405",  # pine tree
-    "\U000f0e66",  # sprout
 ]
 FOOD = [
     "\U000f010f",  # carrot
