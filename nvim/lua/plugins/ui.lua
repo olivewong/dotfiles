@@ -50,11 +50,11 @@ return {
       }
     end,
   },
-  "MeanderingProgrammer/render-markdown.nvim",
-  opts = { left_pad = 2 },
-  -- Used below heading for border
-  --         below = '▀',},
-  dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim", "nvim-tree/nvim-web-devicons" },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = { left_pad = 2 },
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim", "nvim-tree/nvim-web-devicons" },
+  },
   -- {
   --   "lukas-reineke/headlines.nvim",
   --   dependencies = "nvim-treesitter/nvim-treesitter",
