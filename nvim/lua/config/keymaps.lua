@@ -46,6 +46,11 @@ vim.keymap.set("n", "<leader>ag", builtin.grep_string, {})
 -- Ctrl+N: show file tree
 vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree reveal<CR>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "<leader>sr", '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = "Toggle Spectre",
+  noremap = true,
+})
+
 -- TODO: check if works / file creation
 vim.api.nvim_set_keymap(
   "n",
@@ -54,10 +59,4 @@ vim.api.nvim_set_keymap(
   { noremap = true }
 )
 
--- we hate go error handling
-vim.api.nvim_set_keymap(
-  "n",
-  "<C-S-e>",
-  [[<ESC>:put='if err != nil {'<CR>:put='return nil, err'<CR>:put='}'<CR>]],
-  { noremap = true, silent = true }
-)
+-- require("config.vscode_keymaps")
