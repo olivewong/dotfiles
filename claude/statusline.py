@@ -692,6 +692,9 @@ def main():
             )
             p += ("" if i == 0 else " · ") + f"{lbl} {v:.0f}%"
         lb.append(S(a, p, 4))
+    wip = HOME / "repos" / "works_in_progress.md"
+    if wip.exists():
+        lb.append(S(link(f"file://{wip}", fg(C["peach"], G["pencil"] + " wip")), G["pencil"] + " wip", 2))
 
     print(row(lt, rt, cols))
     print(row(lb, [], cols))
