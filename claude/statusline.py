@@ -117,6 +117,7 @@ FOLIAGE_L = [
     "\U000f024a",  # flower
     "\U000f0db5",  # cactus
 ]
+FOLIAGE_R = FOLIAGE_L
 FOOD = [
     "\U000f010f",  # carrot
     "\U000f025b",  # apple
